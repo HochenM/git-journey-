@@ -1,0 +1,713 @@
+Git Course : https://www.youtube.com/watch?v=mAFoROnOfHs
+---------------
+
+Workflow of git
+
+  Working directory -->       Stage -->         Local Repository
+
+               the folder where            my changes are ready      tracking files
+        you are working on your project   they can move next step
+
+
+---------------------------
+
+general command you must know :
+
+1- >> cd <directory> -- where goes e.x: cd C:\Users\top\OneDrive\Desktop
+
+2- >> mkdir <file-name> -- create a new file on the directory you went
+
+3- >> cd <file-name> go to current file you made
+
+4- >> echo. > .txt/...(formats)  -- this make a .txt file in the current directory
+
+for git bash : 4 = touch .txt
+--------------------
+
+Git Commands:
+
+------------------
+Configuration
+
+your info show how are you ;
+
+>> git config --global user.name 
+>> git config --global user.email 
+
+
+
+---------
+
+start
+
+1- >> git init -- create empty .git (Is our repository)
+
+now git can tracks all changes the history of changes all about changes of files.
+
+2- dir -- shows your files where you built .git
+
+3- dir /a -- shows hidden file like .git file have built
+
+for git bash : 2 = ls
+               3 = ls -la
+
+-------------
+
+1- >> cd ../  -- means go back one step
+
+ C:\Users\top\OneDrive\Desktop\git-one   to   C:\Users\top\OneDrive\Desktop>
+
+2- cd ..  -- goes first root
+
+
+----------
+
+Cloning - get a repository from GitHub (remote repository)
+
+1- git clone <link address>
+
+ ---------------
+
+Status - Seeing what has changed in our repository - (modified files - new files)
+
+1- >> git status
+
+--------------
+
+ After modifying adding new files which are the working part of git
+ 
+we reach Staging part where we say I want to keep this changes (you choose which changes):
+including modified ones (tracked before) and new ones (Untracked)
+
+
+>> git add <filename> / git add -A/ git add --all (all changes) 
+
+
+Unstaging ( files in stages go in working directory) :
+
+2- >> git reset
+
+
+3- >> git add . --
+
+git add --all and git add -A: These are identical. -A is just a short, lazy way to type --all. This command tells Git: "Look at every single change across the entire repository, including new files, modified files, and deleted files, and stage them all."
+
+git add .: The dot . means "current folder." This tells Git: "Look at every single change from the folder I am currently sitting in, down through its subfolders, and stage them."
+
+example:
+
+C:\Users\top\OneDrive\Desktop\git-journey-\myFolder> git add .
+
+just files in myFolder stages
+
+files in entire projects that are not in myFolder will now stage
+
+
+4- >> git add * -- just add new or modified files not deleted ones
+
+use on git bash just works there
+
+Example:
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        deleted:    two.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        four.txt
+
+
+after add * :
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   four.txt
+        new file:   myFolder/three.txt
+        modified:   one.txt
+        modified:   two.txt
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        deleted:    two.txt
+
+
+
+
+5- git add *.txt/other file format... -- add just txt files to stage
+
+if there s txt file in a subfile because of *.txt the txt file in the subfile will bit stage
+
+------------
+------------
+
+Stage 3 : moving from stage to local repository
+Committing part
+
+ 
+>> git commit -m "message of updates" --
+
+
+----------------
+
+Back commits to working directory :
+
+>> git reset HEAD\~  --
+
+example:
+
+$ git status
+On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+
+
+to
+
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   one.txt
+        deleted:    two.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        four.txt
+        myFolder/
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+
+------------
+
+Deleting and Adding files at the same time (add means staging)
+
+>> git rm name.txt -- the name.txt will stage but the deleted one :
+ 
+     deleted:  name.txt is on stage
+
+
+-----------------
+
+Reset rules :
+
+>> git reset -- **give back files from stage to working directory Not files** 
+
+
+I mean if rm name.txt reset just give it unchanged . So how can i get the files :
+
+2- >> git reset --hard -- gives file you deleted too
+
+
+-if I change a file first (modifying) then want remove it face with error :
+you have commit it then rm or use:
+
+3- >> git rm -f name.txt (f means force)
+
+quick note:
+
+after rm file when you reset --hard and you open the file you will see basic file and modification you have been applied were disappeared cause you didn't commit the modification
+
+
+
+4- >> rm --cached name.txt -- inly remove it from staging not physically
+
+example :
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        deleted:    four.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        four.txt
+
+
+here four.txt is in your file but is not staged anymore so the second one make sens.
+firt one tells you removed and is staged do you want commit it or not.
+
+
+
+5- >> rm -r <FolderName> - all subfiles are remove too (must use it not opteional)
+
+-----
+-----------
+
+Seeing Commit changes (chinking commit log)
+
+See history of changes:
+
+**>> git log -- commit ids are id tat you can access the previous version before you
+changes things**
+
+2- >> git log --oneline  -- gives you compressed and essential info
+ 
+
+-----------------------
+
+
+Branching
+
+Branching is like pulling a new branch off that main trunk. You copy the current state of the project so you can work on something new without touching or breaking the main trunk.
+
+Merging is taking that branch, once your work is completely finished and tested, and seamlessly grafting it back into the main trunk so everyone can use it.
+
+
+branching use for : Safety (to experiment without breaking working code), Teamwork (so multiple people can work without overwriting each other), and Organization (keeping unfinished features hidden until they are ready).
+
+
+we copy branch with same state just different name so you can work differently.
+
+
+
+
+>> git branch -- shows branches you have with \* main one (we call main one MASTER )
+
+2- >> git branch branch-name   -- this built new branch
+
+
+3- >> git checkout branch-name  -- you move to the branch you want
+
+checkout is for moving from branches to other ones
+
+ if you see status :
+
+$ git status
+On branch development
+nothing to commit, working tree clean
+
+clean because it inherited from main branch that is already clean.
+
+
+suppose in new branch you add sth new like new .txt file
+
+then you go back main branch using --> git checkout main
+
+you will not see the new file there :)
+
+
+
+-- When you change main branch (and already have built another branch) the change wii not automatically merge in your another branch you must merge it ( see by yourself try to see a file has changed in main branch when you are in the other branch )
+
+
+-------------
+
+
+Merging : combine branching together
+
+first go to branch you want merge it
+
+1- >> git merge branch(will be reflect onto another one) -m 'message' 
+
+git merge main -m "Merging main into development "
+
+- now you can merge other branches with main also 
+
+
+* Merging Conflict : It happens when you try to merge two branches that have changes on the exact same lines of the exact same file, and Git gets confused because it doesn't know which version is the correct one to keep.
+
+solution :
+
+you open file and keep the one you want 
+then go back to git bash and follow like before :
+
+git add . 
+git commit -m " "
+
+
+** Another way : 
+
+first merge branches together (not main one) then solve the conflict as told then merge one of the branches no different as before we merged them) 
+
+------------------------------
+
+Accessing to previous versions using IDs:
+
+1- >> git checkout ids --
+
+ how switch back to main file:
+
+2- >> git checkout main --
+
+
+-------------
+
+Comparing two commits together (two version compare)
+
+ 
+1- >> git diff version ID1  version ID2 -- order is matter 
+
+first commit comes earlier : so :
+
++ Green (Added): What needs to be added to the first commit to match the second.
+
+- Red (Removed): What needs to be deleted from the first commit to match the second.
+ 
+
+-----------
+
+Push / Fetch / Pull
+
+
+-push = sending local changes to the remote 
+
+-fetch = bringing remote changes into your local repository, but NOT merging yet
+
+-pull = Fetching plus merging- so your working directory immediately reflects the remote changes
+ 
+----------------
+
+The Big Question: Why do we use branching if cloning + pulling does the same job?
+If your entire team just clones the repo and pushes directly to main (solving conflicts on their laptops via git pull), you are technically merging. But here is why teams don't do it:
+
+Reason A: You avoid the "Race to Push" Panic
+Imagine a team of 5 researchers working on a machine learning project.
+
+You spend 4 hours writing code and try to push. Rejected! Someone else pushed first.
+
+You run git pull, spend 15 minutes fixing their conflicts, and try to push again. Rejected again! A third teammate pushed while you were fixing the conflicts.
+
+You get stuck in an endless loop of pulling, fixing conflicts, and praying your push goes through before someone else beats you to it.
+
+With Branching: You create a branch called hosein/model-fix. You can push your branch to GitHub anytime you want without pulling anyone else's code first. Your branch sits safely online in its own lane. No one can block you.
+
+Reason B: Peer Review & Code Quality (Pull Requests)
+If you push directly to main, your code goes live instantly. If you accidentally left a typo that crashes the training script, the whole team is blocked until you fix it.
+
+With Branching: 1. You finish your work on your separate branch and push it online.
+2. You open a Pull Request on GitHub. This is a webpage that says: "Hey team, I want to merge my branch into main. Please look at my code changes."
+3. Your advisor or teammate clicks the link, sees a clean git diff of your work, types comments like "Looks great, but change learning_rate to 0.01", and hits Approve.
+4. Only after the approval is the branch safely merged into main.
+
+Reason C: Keeping main Working at All Times
+If an admissions committee or a collaborator visits your GitHub link right now, they expect to see code that works. If you work directly on main, the code is constantly in a half-broken state while you are actively working on it. Branching ensures that main is a pristine, flawless zone, while the messy, unfinished work happens safely off to the side.
+
+
+---------------------
+
+Push :
+
+>> git push origin (remote repository you cloned) main( branch name you want add there merge there )
+
+Scenario one : working with teammate : 
+
+you clone then 
+
+you branch let names optimizing (>> git branch optimizing) then
+
+changes after that staging and committing at the end
+
+>. git push origin optimizing  then for merging in the main 
+
+you ask pull request so leader see your code when he/she approve it it merges with main one
+
+
+ Scenario 2 :
+
+you working alone so 
+ 1. Switch back to your local main trunk
+>> git checkout main
+
+ 2. Pull the changes from your side branch into your local main
+>> git merge hosein/add-features
+
+ 3. Push the newly updated main branch back up to GitHub
+>> git push origin main
+
+-------------
+
+
+Fetch 
+
+>> git fetch -- it gets remote repository
+
+now to want merge and pull completely use
+
+2- >> git merge --
+
+Pull = 1 + 2 
+
+
+easy way is :
+
+3- >> git pull (do 1 and 2 same time)
+
+=========
+
+Restoring (restore and restore --staged ) 
+
+simple words : undo uncommitted changes
+
+>> git restore <filename> / restore . --
+ 
+When to use it: You modified a file, completely messed up the code, it doesn't compile, and you just want to wipe out your recent edits and start over from your last saved state.
+
+
+2- >> git restore --staged <flename> / restore --staged . --
+
+It un-stages a file. It removes the file from the Staging Area, but leaves your actual text changes inside your Working Directory completely safe.
+
+When to use it: You accidentally typed git add . or git add deep_learning_model.py before it was ready, and you want to pull it out of the staging room so it doesn't get included in the next commit.
+
+
+
+
+
+git restore --staged <file>`**: **True.** You use this when you want to pull a file *back* out of the Staging Area room because you aren't ready to commit it yet. It leaves your actual code edits completely untouched in your working directory.
+
+git restore <file>`**: **True.** You use this when you want to throw away your recent messy edits in your Working Directory and get back the clean "original file" (the last saved version from your staging area or last commit).
+
+
+2.`git reset` vs `git restore --staged**`
+
+Your statement that **`git reset` does the same job as `git restore --staged` is historically correct!
+
+If you type:
+
+```bash
+git reset HEAD file.txt
+
+```
+
+It does the **exact same thing** as:
+
+```bash
+git restore --staged file.txt
+
+```
+
+
+Summarize (my own experience)
+
+1-you have modified two files 
+
+2- wrongly you add both them with add . 
+
+3- but one of them is messed up 
+
+4- you use git restore --staged wrongfilename
+
+5- now you commit the other one
+
+6- now you want correct the wrong one but is really messed-up 
+
+7- so now you want the first version you were modifying to start again
+
+8 - so use git retore wrongfilename
+
+
+Note : if you do not restore --staged wrongfilename 
+
+and you use git retore wrongfilename
+ 
+  you will not get the version you start to modifying it 
+
+so first under staged it then restore it
+
+
+
+------------
+------------
+
+
+- Stash -
+
+Use when You are in the middle of writing a complex new feature or refactoring a file. The code is completely broken, half-written, and won't compile. Suddenly, your teammate or advisor messages you: "Hey, there is a critical bug in the main branch, I need you to fix it right now!"
+
+You can't commit your broken, half-written code (commits should always be clean and working).
+
+You can't switch branches or pull updates because Git will block you or overwrite your messy workspace files.
+
+The Solution: You stash your broken work to clear your desk, fix the urgent bug, and then un-stash your work to resume exactly where you left off.
+
+ example:
+
+1- >> git stash --
+
+now you switch using >> git checkout branchname
+
+then after that you come back to your branch you were working with
+
+now if you see your files are not included you changes you added 
+
+simply you can get them back with :
+
+2- >> git stash pop -- 
+
+
+* multiple stash : Git packs up your current workspace, puts it into a new box, and throws it onto the top of the pile.
+
+Because it acts like a stack, it follows a rule called LIFO (Last In, First Out). This means when you run git stash pop, Git always grabs the very top box (the newest one you stashed) first.
+
+When you have multiple items on your shelf, Git labels them using an index system that looks like this:
+
+stash@{0}: The top of the pile (Newest stash)
+
+stash@{1}: The item below it
+
+stash@{2}: The item below that (Oldest stash)
+
+The Multi-Stash Toolbox
+
+3- >> git stash -m "my message" -- 
+
+: Highly recommended when doing multiple stashes! It lets you put a label on the box so you don't forget what's inside.
+
+4- >> git stash list -- 
+
+Peeks at your shelf and shows you your pile of boxes with their labels.
+
+git stash pop: Grabs the top box (stash@{0}), brings it back to your code, and throws the empty box away.
+
+5- >> git stash apply stash@{1} --
+
+: Brilliantly brings back a specific box from the middle of the pile without deleting it from the shelf.
+
+
+
+After adding the stash one and commiting is not stash anymore-
+
+
+6- >> git stash apply (if you have one stash list it works )
+
+when use git apply when git pop :
+
+git stash pop: Throws the changes back into your files and deletes the box from the stash shelf.
+
+git stash apply: Copies the changes back into your files but leaves the box sitting safely on the stash shelf.
+
+ 
+merge VS Apply
+
+Use git merge when a feature is 100% complete, fully tested, and you want to permanently combine its entire history into another main branch.
+
+Use git stash apply when you just want to copy-paste a quick, uncommitted block of helper code or configuration settings across your workspace without making it a permanent historical event yet.
+
+
+you can bring a new file to another bracnh without merging 
+
+
+
+both these work:
+
+>> git stash pop stash@{0}
+>> git stash apply stash@{0}
+
+
+7- >> git stash drop / drop stash@{0} -- removing a specific stash from stash list
+
+
+------------
+------------
+
+ - Revert -
+
+git revert is Git’s official "public safety eraser." It is the safest, cleanest way to undo a mistake that has already been pushed to GitHub because it fixes the error without destroying or erasing your project's historical timeline.
+
+Instead of traveling back in time to delete a bad commit, git revert looks at the bad commit, calculates the exact opposite of what you did, and automatically creates a brand new commit that rolls back those changes.
+
+
+The Core Difference: git revert vs git reset:
+
+While both commands undo things, they are used in completely opposite scenarios in the real world. The golden rule boils down to: Is your mistake public (on GitHub) or private (only on your laptop)
+
+summary Rule of Thumb
+
+If you made a messy commit on your laptop and haven't pushed it online yet, use git reset to wipe your tracks clean.
+
+If your commit is already sitting on GitHub, never use reset. Use git revert to cleanly step forward out of the mistake.
+
+
+
+1- >> git revert ids -- 
+
+
+------------
+------------
+Note : 1-  >> git reset HEAD~ 
+ comes with 
+
+2- >> git restore .
+
+first one just backing in staging your code still is like the modifying one unless you back it the basic one
+
+or use:
+
+3- git >> reset --hard HEAD~ 
+-----------
+-----------
+
+ - REBASE - 
+
+git rebase is Git's ultimate time-travel tool for rewiring history. It allows you to take all the new commits you wrote on a side branch, lift them up, and slide them cleanly onto the very end of another branch (like main).
+
+The Merge Way (The Historical Blend)
+When you run git merge main, Git combines the two branches by creating a brand-new Merge Commit at the end.
+
+The Result: Your history timeline splits and comes back together like a knot. It preserves exactly how and when things happened historically.
+
+The Rebase Way (The Perfect Line)
+When you run git rebase main on your side branch, Git temporarily detaches your commits, downloads the new commits from main, and then re-plays your commits one by one on top of the fresh updates.
+
+The Result: It rewrites your history to look like a perfectly straight line, as if you started working after your teammate pushed their changes!
+
+
+Local/Private branch? Use git rebase as much as you want to keep your personal timeline clean before sending it to the team.
+
+Public/Shared branch? Never rebase. Use standard git merge so everyone’s timelines stay aligned and peaceful!
+
+like merging first go to the branch you want merge sth with it. 
+
+
+1- >> git rebase main (or other branches) --
+
+like >> git rebase main --
+
+-----------
+----------
+
+- Pull Request - 
+
+Pull Request (PR) is not actually a Git command—it is a feature invented by platforms like GitHub, GitLab, and Bitbucket.
+
+In simple terms, a Pull Request is a formal "Hey team, I finished my work, please review it and merge it!" notification. It is a dedicated webpage where your team can look at your code changes, discuss them, run automated tests, and safely merge your side branch into the main production branch.
+
+
+
+
+ 
+Summary Checklist of a PR Workflow
+
+1- Create a branch on your laptop.
+
+2- Write code and commit your changes locally.
+
+3- Push the branch up to GitHub (git push origin your-branch).
+
+4- Open the PR on the GitHub website.
+
+5- Discuss, fix, and review the code with your team.
+
+6- Merge the PR to combine it into the main branch.
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+ 
